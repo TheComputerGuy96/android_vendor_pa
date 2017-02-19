@@ -40,5 +40,5 @@
 
 # Samsung Broadcom
     PRODUCT_MAKEFILES += \
-    $(LOCAL_DIR)/kylepro/pa_kylepro.mk
+    $(LOCAL_DIR)/kylepro/pa_kylepro.mk \
     $(LOCAL_DIR)/kyleprods/pa_kyleprods.mk
