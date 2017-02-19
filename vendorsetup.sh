@@ -22,3 +22,7 @@ add_lunch_combo pa_vs985-userdebug
 
 # AOSP
 add_lunch_combo pa_angler-userdebug
+
+# Samsung Broadcom
+add_lunch_combo pa_kylepro-userdebug
+add_lunch_combo pa_kyleprods-userdebug

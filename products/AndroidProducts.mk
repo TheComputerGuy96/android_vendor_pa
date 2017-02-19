@@ -37,3 +37,8 @@
 # AOSP
     PRODUCT_MAKEFILES += \
     $(LOCAL_DIR)/angler/pa_angler.mk
+
+# Samsung Broadcom
+    PRODUCT_MAKEFILES += \
+    $(LOCAL_DIR)/kylepro/pa_kylepro.mk
+    $(LOCAL_DIR)/kyleprods/pa_kyleprods.mk
