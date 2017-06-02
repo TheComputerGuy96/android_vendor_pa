@@ -1,4 +1,4 @@
-# Copyright 2016 ParanoidAndroid Project
+# Copyright 2016-2017 Paranoid Android
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@
 
 ifeq (pa_angler,$(TARGET_PRODUCT))
 
-# Use the full CAF BSP
-TARGET_USES_AOSP := false
-
 # We have our own power HAL
 TARGET_USES_DEVICE_SPECIFIC_POWERHAL := true
+
+# Use AOSP Camera Application
+TARGET_USES_AOSP_CAMERA := true
 
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 AUDIO_FEATURE_ENABLED_DSM_FEEDBACK := true
@@ -42,7 +42,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.hwc.mdpcomp.enable=true \
     persist.hwc.ptor.enable=true \
     persist.mdpcomp.4k2kSplit=1 \
-    persist.hwc.mdpcomp.maxpermixer=5
+    persist.hwc.mdpcomp.maxpermixer=5 \
     persist.mdpcomp_perfhint=50 \
     persist.metadata_dynfps.disable=true \
     persist.sys.wfd.virtual=0
@@ -66,7 +66,7 @@ PRODUCT_MANUFACTURER := Huawei
 PRODUCT_RESTRICT_VENDOR_FILES := false
 PRODUCT_BUILD_PROP_OVERRIDES += \
 	PRODUCT_NAME=angler \
-	BUILD_FINGERPRINT=google/angler/angler:7.1.1/NMF26F/3425388:user/release-keys \
-	PRIVATE_BUILD_DESC="angler-user 7.1.1 NMF26F 3425388 release-keys"
+	BUILD_FINGERPRINT=google/angler/angler:7.1.2/N2G47H/3783593:user/release-keys \
+	PRIVATE_BUILD_DESC="angler-user 7.1.2 N2G47H 3783593 release-keys"
 
 endif

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2015, ParanoidAndorid Project
+     Copyright (C) 2015-2017 Paranoid Android
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -17,6 +17,14 @@
         <item>com.google.android.gms</item>
         <!-- The standard AOSP fused location provider -->
         <item>com.android.location.fused</item>
+    </string-array>
+
+    <!-- A list of potential packages, in priority order, that may contain an
+         ephemeral resolver. Each package will be be queried for a component
+         that has been granted the PACKAGE_EPHEMERAL_AGENT permission.
+         This may be empty if ephemeral apps are not supported. -->
+    <string-array name="config_ephemeralResolverPackage">
+        <item>com.google.android.gms</item>
     </string-array>
 
     <bool name="config_cellBroadcastAppLinks">true</bool>
@@ -66,4 +74,7 @@
     <string name="config_mms_user_agent" translatable="false">Paranoid Android</string>
     <!-- MMS user agent prolfile url -->
     <string name="config_mms_user_agent_profile_url" translatable="false">http://get.aospa.co/Paranoid-MMS.xml</string>
+
+    <!-- Control whether Night display is available. -->
+    <bool name="config_nightDisplayAvailable">true</bool>
 </resources>

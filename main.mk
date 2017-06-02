@@ -1,4 +1,4 @@
-# Copyright (C) 2016 ParanoidAndroid Project
+# Copyright (C) 2013-2017 Paranoid Android
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ export VENDOR := pa
 
 # Include versioning information
 # Format: Major.minor.maintenance(-TAG)
-export PA_VERSION := 7.1.0-DEV
+export PA_VERSION := 7.1.3-DEV
 
 export ROM_VERSION := $(PA_VERSION)-$(shell date -u +%Y%m%d)
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -50,16 +50,8 @@ PRODUCT_PROPERTY_OVERRIDES += persist.sys.hideapn=false
 PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/common
 PRODUCT_PACKAGE_OVERLAYS += vendor/pa/overlay/$(TARGET_PRODUCT)
 
-# Include support for init.d scripts
-PRODUCT_COPY_FILES += vendor/pa/prebuilt/bin/sysinit:system/bin/sysinit
-
-ifneq ($(TARGET_BUILD_VARIANT),user)
-# Include support for userinit
-PRODUCT_COPY_FILES += vendor/pa/prebuilt/etc/init.d/90userinit:system/etc/init.d/90userinit
-endif
-
 # Recommend using the non debug dexpreopter
-USE_DEX2OAT_DEBUG ?= false
+USE_DEX2OAT_DEBUG := false
 
 # Include APN information
 PRODUCT_COPY_FILES += vendor/pa/prebuilt/etc/apns-conf.xml:system/etc/apns-conf.xml
@@ -67,8 +59,10 @@ PRODUCT_COPY_FILES += vendor/pa/prebuilt/etc/apns-conf.xml:system/etc/apns-conf.
 # Include support for preconfigured permissions
 PRODUCT_COPY_FILES += vendor/pa/prebuilt/etc/default-permissions/pa-permissions.xml:system/etc/default-permissions/pa-permissions.xml
 
+# Copy PA specific init file
+PRODUCT_COPY_FILES += vendor/pa/prebuilt/root/init.pa.rc:root/init.pa.rc
+
 # Include support for additional filesystems
-# TODO: Implement in vold
 PRODUCT_PACKAGES += \
     e2fsck \
     mke2fs \
@@ -81,12 +75,22 @@ PRODUCT_PACKAGES += \
 
 # Include support for GApps backup
 PRODUCT_COPY_FILES += \
-    vendor/pa/prebuilt/bin/backuptool.functions:install/bin/backuptool.functions \
-    vendor/pa/prebuilt/bin/backuptool.sh:install/bin/backuptool.sh \
+    vendor/pa/prebuilt/install/bin/backuptool.functions:install/bin/backuptool.functions \
+    vendor/pa/prebuilt/install/bin/backuptool.sh:install/bin/backuptool.sh \
     vendor/pa/prebuilt/addon.d/50-backuptool.sh:system/addon.d/50-backuptool.sh
 
+# Include PA GApps config
+PRODUCT_COPY_FILES += \
+    vendor/pa/prebuilt/install/gapps-config.txt:install/gapps-config.txt
+
+# Include hostapd configuration
+PRODUCT_COPY_FILES += \
+    vendor/pa/prebuilt/etc/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
+    vendor/pa/prebuilt/etc/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny \
+    vendor/pa/prebuilt/etc/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept
+
 # Build Chromium for Snapdragon (PA Browser)
-PRODUCT_PACKAGES += PA_Browser
+PRODUCT_PACKAGES += PABrowser
 
 # Build Snapdragon apps
 PRODUCT_PACKAGES += \
@@ -139,6 +143,9 @@ PRODUCT_BOOT_JARS += tcmiface
 
 # RCS Service
 PRODUCT_PACKAGES += \
+    rcscommon \
+    rcscommon.xml \
+    rcsservice \
     rcs_service_aidl \
     rcs_service_aidl.xml \
     rcs_service_aidl_static \
@@ -148,11 +155,11 @@ PRODUCT_PACKAGES += \
 # Bluetooth Audio (A2DP)
 PRODUCT_PACKAGES += libbthost_if
 
+# Substratum
+PRODUCT_PACKAGES += ThemeInterfacer
+
 # Include vendor SEPolicy changes
 include vendor/pa/sepolicy/sepolicy.mk
-
-# Include performance tuning if it exists
--include vendor/perf/perf.mk
 
 # Include proprietary header flags if vendor/head exists
 -include vendor/head/head-capabilities.mk
